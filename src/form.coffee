@@ -31,14 +31,22 @@ export default class RfForm extends React.Component
     @props.stateKey || @props.name
 
   get: (path) =>
-    resource = @props.owner.state[@stateKey()]
+    {owner} = @props
 
-    throw "Resource #{@props.name} was not found in state" unless resource?
+    throw "[rrf-core] getState() is defined in owner, but state is passed too. Probably, you have method getState() in your component, please refactor RfForm owner." if owner.getState? && owner.state?
+
+    resource =
+      if owner.getState?
+        owner.getState()[@stateKey()]
+      else
+        owner.state[@stateKey()]
+
+    throw "[rrf-core] Resource #{@props.name} was not found in state" unless resource?
 
     resource[path]
 
   set: (path, value) =>
-    @dirty ||= true if @props.owner.state[path] isnt value
+    @dirty ||= true if @get() isnt value
     {autoClearErrors} = @props
     @props.owner.setState((state) =>
       "#{@stateKey()}":{
