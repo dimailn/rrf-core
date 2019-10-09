@@ -66,6 +66,9 @@ export default class RfForm extends React.Component
     EventBus.addEventListener('onChange', @update)
     @dirty = false
 
+  componentWillUnmount: ->
+    EventBus.removeEventListener('onChange', @update)
+
   isDirty: =>
     @dirty
 

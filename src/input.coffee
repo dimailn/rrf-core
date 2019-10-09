@@ -8,6 +8,10 @@ export default class RfInput extends React.Component
     @context.rfBus.addEventListener('onChange', @update)
     @context.rfBus.addEventListener('invalidate', @invalidate)
 
+  componentWillUnmount: ->
+    @context.rfBus.removeEventListener('onChange', @update)
+    @context.rfBus.removeEventListener('invalidate', @invalidate)    
+
   invalidate: (e) =>
     return unless e.target.name is @props.name
 
