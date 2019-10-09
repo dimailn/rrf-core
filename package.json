@@ -9,6 +9,7 @@
     "pub": "npm run build && npm publish"
   },
   "author": "",
+  "repository": "https://github.com/dimailn/rrf-core",
   "license": "ISC",
   "dependencies": {
     "eventbusjs": "^0.2.0",
